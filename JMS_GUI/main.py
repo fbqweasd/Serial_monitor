@@ -1,4 +1,4 @@
-from QT_Form import *
+from JMS_GUI import *
 
 if __name__=="__main__":
 
@@ -7,6 +7,5 @@ if __name__=="__main__":
     Form = QtWidgets.QWidget()
     ui = Ui_Form()
     ui.setupUi(Form)
-    ui.signals()
     Form.show()
     sys.exit(app.exec_())
