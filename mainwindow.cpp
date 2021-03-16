@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    Scan_Serial_Port(ui);
+    Scan_Serial_Port();
 
     //시리얼 설정 코드
     port = new QSerialPort();
@@ -73,7 +73,7 @@ void MainWindow::on_serial_Button_clicked()//시리얼 포트 확인 버튼
  * @brief 사용가능한 시리얼 포트 검색
  * @param ui
  */
-void MainWindow::Scan_Serial_Port(Ui::MainWindow *ui){
+void MainWindow::Scan_Serial_Port(){
     HKEY hKey; // Windows 레지스트리 접근
     RegOpenKey(HKEY_LOCAL_MACHINE, TEXT("HARDWARE\\DEVICEMAP\\SERIALCOMM"), &hKey);
 

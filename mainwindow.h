@@ -43,7 +43,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void Scan_Serial_Port(Ui::MainWindow *ui);
+    void Scan_Serial_Port();
 
 };
 
