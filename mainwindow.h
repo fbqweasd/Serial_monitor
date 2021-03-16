@@ -43,6 +43,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void Setup_Serial(int baudrate);
     void Scan_Serial_Port();
 
 };

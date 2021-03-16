@@ -10,8 +10,6 @@
 #include <QAction>
 #include <cstring>
 
-void Scan_Serial_Port(Ui::MainWindow *ui);
-
 QString TCHARToString(const TCHAR* ptsz);
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,22 +18,24 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    Setup_Serial(9600);
     Scan_Serial_Port();
 
-    //시리얼 설정 코드
-    port = new QSerialPort();
-    port->setBaudRate(QSerialPort::Baud9600);
-    port->setDataBits(QSerialPort::Data8);
-    port->setParity(QSerialPort::NoParity);
-    port->setStopBits(QSerialPort::OneStop);
-    port->setFlowControl(QSerialPort::NoFlowControl);
-
-    QObject::connect(port, SIGNAL(readyRead()), this, SLOT(text_Reading())); // 이 친구가 인터럽트 같은거
+    QObject::connect(port, SIGNAL(readyRead()), this, SLOT(text_Reading()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::Setup_Serial(int baudrate){
+    port = new QSerialPort();
+    port->setBaudRate(baudrate);
+    port->setDataBits(QSerialPort::Data8);
+    port->setParity(QSerialPort::NoParity);
+    port->setStopBits(QSerialPort::OneStop);
+    port->setFlowControl(QSerialPort::NoFlowControl);
 }
 
 void MainWindow::text_Reading(){
