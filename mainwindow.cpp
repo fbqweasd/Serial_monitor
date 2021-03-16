@@ -30,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     port->setStopBits(QSerialPort::OneStop);
     port->setFlowControl(QSerialPort::NoFlowControl);
 
-
-
     QObject::connect(port, SIGNAL(readyRead()), this, SLOT(text_Reading())); // 이 친구가 인터럽트 같은거
 }
 
@@ -71,15 +69,17 @@ void MainWindow::on_serial_Button_clicked()//시리얼 포트 확인 버튼
 }
 
 
-
-void Scan_Serial_Port(Ui::MainWindow *ui){
-    //열린 시리얼 포트 검색
-    HKEY hKey; //엔 레지스트리에 접근하는 친구
+/**
+ * @brief 사용가능한 시리얼 포트 검색
+ * @param ui
+ */
+void MainWindow::Scan_Serial_Port(Ui::MainWindow *ui){
+    HKEY hKey; // Windows 레지스트리 접근
     RegOpenKey(HKEY_LOCAL_MACHINE, TEXT("HARDWARE\\DEVICEMAP\\SERIALCOMM"), &hKey);
 
     TCHAR szData[20], szName[100];
     DWORD index = 0, dwSize=100, dwSize2 = 20, dwType = REG_SZ;
-    memset(szData, 0x00, sizeof(szData));  //초기화
+    memset(szData, 0x00, sizeof(szData));
     memset(szName, 0x00, sizeof(szName));
 
     while (ERROR_SUCCESS == RegEnumValue(hKey, index, szName, &dwSize, NULL, NULL, NULL, NULL)){
@@ -99,10 +99,10 @@ void Scan_Serial_Port(Ui::MainWindow *ui){
 }
 
 QString TCHARToString(const TCHAR* ptsz){
- int len = wcslen((wchar_t*)ptsz);
- char* psz = new char[2*len + 1];
- wcstombs(psz, (wchar_t*)ptsz, 2*len + 1);
- QString s = psz;
- delete [] psz;
- return s;
+     int len = wcslen((wchar_t*)ptsz);
+     char* psz = new char[2*len + 1];
+     wcstombs(psz, (wchar_t*)ptsz, 2*len + 1);
+     QString s = psz;
+     delete [] psz;
+     return s;
 }
